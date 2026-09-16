@@ -48,6 +48,6 @@
 
 ## 4. Sau khi so visibility report với bạn cùng nhóm (Tự phân tích Solo)
 
-- Khớp có `%v=1` cao nhất: `left_ear` (64%) và `right_ear` (54%), kế tiếp là `left_hip` (36%) và `right_wrist` (36%).
+- Khớp có `%v=1` cao nhất: `left_ear` (66%) và `right_ear` (52%), kế tiếp là `left_hip` (38%) và `right_wrist` (34%).
 - Nguyên nhân là **guideline chưa rõ** hay **một trong hai bên gán sai**: Là do **đặc thù giải phẫu và trang phục**: Tai thường xuyên bị tóc, nón mũ hoặc góc nghiêng 3/4 của khuôn mặt che khuất nhiều nhất. Hông bị áo dài/quần phủ kín.
 - Luật mới bổ sung vào mục 2 sau khi thống nhất: Với tai bị khuất hoàn toàn phía sau đầu khi người quay mặt đi hướng khác, luôn dùng trục đối xứng qua sống mũi để ước lượng vị trí tai và gắn **v = 1**, chỉ dùng **v = 0** khi phần đầu bị cắt khỏi mép ảnh.

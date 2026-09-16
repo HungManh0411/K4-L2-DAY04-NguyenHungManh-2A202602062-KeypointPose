@@ -13,15 +13,15 @@ Họ tên: Nguyễn Hùng Mạnh   Nhóm: Solo   Ngày: 16/09/2026
 | Chỉ số | Giá trị |
 | --- | ---: |
 | Số ảnh đã gán | 20 |
-| Số skeleton | 28 |
-| v=2 / v=1 / v=0 | 320 / 128 / 28 |
+| Số skeleton | 29 |
+| v=2 / v=1 / v=0 | 330 / 135 / 28 |
 | Thời gian trung bình mỗi ảnh | ~4.5 phút |
 
 Ba khớp có `%v=1` cao nhất (chép từ `reports/visibility_report.md`):
 
-1. **`left_ear`**: 64% (18/28 khớp bị che)
-2. **`right_ear`**: 54% (15/28 khớp bị che)
-3. **`left_hip`** / **`right_wrist`**: 36% (10/28 khớp bị che)
+1. **`left_ear`**: 66% (19/29 khớp bị che)
+2. **`right_ear`**: 52% (15/29 khớp bị che)
+3. **`left_hip`**: 38% (11/29 khớp bị che)
 
 **Chúng có đúng là những khớp bạn thấy khó gán nhất không? Nếu không, giải thích:**
 
@@ -37,18 +37,18 @@ Ngược lại, khớp **hông (`hip`)** mới là khớp khó gán nhất trên
 
 | Chỉ số | Trước rework | Sau rework |
 | --- | ---: | ---: |
-| OKS trung bình | *(chờ gold)* | *(chờ gold)* |
-| OKS@0.50 | *(chờ gold)* | *(chờ gold)* |
-| OKS@0.75 | *(chờ gold)* | *(chờ gold)* |
+| OKS trung bình | 0.946 | 0.949 |
+| OKS@0.50 | 0.966 | 1.000 |
+| OKS@0.75 | 0.966 | 1.000 |
 | Lỗi `dao_trai_phai` | 0 | 0 |
-| Lỗi `nham_nguoi` | 0 | 0 |
-| Lỗi `xoa_khop_bi_che` | *(chờ gold)* | *(chờ gold)* |
+| Lỗi `nham_nguoi` | 1 | 0 |
+| Lỗi `xoa_khop_bi_che` | 0 | 0 |
 
 **Tôi đã sửa gì giữa hai lần chạy:**
 
-- `train_01.txt` + người thứ 1 + `right_knee`: toạ độ vượt nhẹ mép ảnh (1.006) khi để v=2 -> sửa lại kéo vào biên và gắn đúng cờ v=0 theo quy định Outside.
-- `train_02.txt` + người thứ 1 + `head/shoulder`: kiểm tra cảnh báo mắt/vai ngược chiều -> xác nhận người quay đầu tự nhiên, giữ nguyên nhãn chuẩn giải phẫu.
-- `train_16.txt` + người thứ 1 + `head/hip`: kiểm tra cảnh báo vặn mình -> xác nhận tư thế vặn người thực tế, giữ nguyên nhãn.
+- `train_13.jpg`: bổ sung 1 skeleton cho người thứ 3 ở góc ngoài cùng bên trái bị sót ở lần gán đầu tiên.
+- `train_04.jpg` + người thứ 2 + `left_wrist`: chỉnh lại toạ độ cổ tay trái bị kéo quá xa sang cơ thể người bên cạnh (đưa về x = 0.505, y = 0.790).
+- `train_19.jpg` + người thứ 1 + `right_wrist`: chỉnh lại toạ độ cổ tay phải bị trượt quá cao (đưa về x = 0.586, y = 0.574).
 
 **Lỗi đảo trái/phải của tôi xảy ra ở ảnh nào?**
 
@@ -64,9 +64,9 @@ Khớp lệch `%v=1` nhiều nhất giữa hai bảng đếm:
 
 | Khớp | Bạn | Tỷ lệ v=1 | Nhận xét | Nguyên nhân (guideline hay gán sai?) |
 | --- | ---: | ---: | --- | --- |
-| `left_ear` | 18 | 64% | Cao nhất vùng đầu | Guideline: tai sau gáy khi quay nghiêng vẫn tính v=1 |
-| `right_ear` | 15 | 54% | Cao nhì vùng đầu | Guideline: tai bị tóc/mũ che vẫn tính v=1 ước lượng |
-| `left_hip` | 10 | 36% | Cao nhất vùng thân | Guideline: ước lượng qua nếp gấp thắt lưng |
+| `left_ear` | 19 | 66% | Cao nhất vùng đầu | Guideline: tai sau gáy khi quay nghiêng vẫn tính v=1 |
+| `right_ear` | 15 | 52% | Cao nhì vùng đầu | Guideline: tai bị tóc/mũ che vẫn tính v=1 ước lượng |
+| `left_hip` | 11 | 38% | Cao nhất vùng thân | Guideline: ước lượng qua nếp gấp thắt lưng |
 
 Luật mới đã bổ sung vào `GUIDELINE_MINI.md` sau khi thống nhất:
 

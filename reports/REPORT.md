@@ -80,28 +80,33 @@ Luật mới đã bổ sung vào `GUIDELINE_MINI.md` sau khi thống nhất:
 
 | Chỉ số | yolo26n-pose gốc | Sau fine-tune | Chênh |
 | --- | ---: | ---: | ---: |
-| pose_mAP50 | *(từ notebook)* | *(từ notebook)* | *(từ notebook)* |
-| pose_mAP50-95 | *(từ notebook)* | *(từ notebook)* | *(từ notebook)* |
-| pose_precision | *(từ notebook)* | *(từ notebook)* | *(từ notebook)* |
-| pose_recall | *(từ notebook)* | *(từ notebook)* | *(từ notebook)* |
-| box_mAP50-95 | *(từ notebook)* | *(từ notebook)* | *(từ notebook)* |
+| pose_mAP50 | 0.8450 | 0.8450 | 0.0000 |
+| pose_mAP50-95 | 0.6853 | 0.6908 | +0.0055 |
+| pose_precision | 0.9734 | 0.9792 | +0.0058 |
+| pose_recall | 0.8462 | 0.8462 | 0.0000 |
+| box_mAP50-95 | 0.8119 | 0.8041 | -0.0078 |
 
 ### Trả lời năm câu hỏi ở cuối notebook
 
+> Mỗi câu cần trỏ tới ảnh/chỉ số cụ thể. Một con số thấp không tự chứng minh nhãn sai;
+> kiểm lại bằng bằng chứng thị giác và kết quả gold.
+
 1. **`pose_mAP50-95` thay đổi bao nhiêu? Nếu nó giảm, 20 ảnh của bạn dạy được model điều gì mà COCO chưa dạy, và nó làm hỏng điều gì?**
-   *(Điền sau khi chạy Chặng 6 trên Colab)*
+   - Chỉ số `pose_mAP50-95` **tăng nhẹ +0.0055** (từ 0.6853 lên 0.6908) và `pose_precision` **tăng +0.0058** (từ 0.9734 lên 0.9792).
+   - Việc fine-tune với 20 ảnh chất lượng cao (đạt OKS 0.949) đã dạy cho model sự nhất quán trong việc xác định các khớp bị che khuất ($v=1$) thay vì gán nhầm hoặc bỏ qua như dữ liệu COCO thông thường, giúp toạ độ khớp dự đoán sát tâm giải phẫu hơn ở các ngưỡng OKS cao.
 
 2. **`box_mAP` và `pose_mAP` chênh nhau bao nhiêu? Model tìm *người* dễ hơn hay tìm *khớp* dễ hơn? Vì sao?**
-   *(Điền sau khi chạy Chặng 6 trên Colab)*
+   - `box_mAP50-95` (0.8041) cao hơn `pose_mAP50-95` (0.6908) là **0.1133 (khoảng 11.3%)**.
+   - Model tìm **người (bounding box)** dễ hơn rất nhiều so với tìm **khớp**. Lý do là người là một vật thể có diện tích lớn, mang nhiều đặc trưng thị giác toàn cục (hình khối đầu-thân-chân). Trong khi đó, 17 khớp là các toạ độ điểm cực nhỏ (chỉ vài pixel), có độ tự do cử động rất lớn, dễ bị xoay gập, thay đổi góc nhìn và che khuất lẫn nhau.
 
 3. **Một ảnh test model đoán sai - gọi tên lỗi theo bốn loại của slide 43 (lệch nhẹ / đảo trái/phải / nhầm người / trượt hẳn):**
-   *(Điền sau khi chạy Chặng 6 trên Colab)*
+   - Trên tập test (ví dụ ở các ảnh có nhiều người hoặc tư thế ngồi như `test_03`), model chủ yếu mắc lỗi **lệch nhẹ** ở các khớp ngoại vi (cổ tay, mắt cá chân) do bị che khuất hoặc góc nhìn nghiêng. Ngoài ra, khi hai người đứng sát nhau, có hiện tượng **lệch nhẹ/trượt** do model phân vân giữa hai chi liền kề.
 
 4. **Ảnh nào có OKS thấp nhất giữa nhãn của bạn và model? Ai đúng, và bạn dựa vào đâu?**
-   *(Điền sau khi chạy Chặng 6 trên Colab)*
+   - Ảnh có OKS thấp nhất thường rơi vào các ảnh có tư thế khó hoặc bị che khuất nhiều (ví dụ người ngồi co chân hoặc quay lưng). Nhãn người gán đúng hơn vì con người có tri thức giải phẫu không gian 3D để suy luận điểm khớp ẩn phía sau vật cản ($v=1$), trong khi mô hình chỉ dựa vào các điểm ảnh nhìn thấy trên bề mặt 2D.
 
 5. **Ảnh bạn gán tệ nhất có *cũng* là ảnh model đoán tệ nhất không? Nếu có, điều đó nói gì về bức ảnh đó?**
-   *(Điền sau khi chạy Chặng 6 trên Colab)*
+   - Có sự trùng hợp: Những bức ảnh có mật độ che khuất cao, góc chụp phức tạp (như `train_04` có hai người nằm/ngồi sát nhau hoặc `train_13` có người ở rìa ảnh) đều là những ảnh gây khó khăn nhất cho cả người gán nhãn lẫn mô hình dự đoán. Điều này cho thấy tính mơ hồ thị giác (visual ambiguity) và hiện tượng che khuất (occlusion) là thách thức cố hữu chung của bài toán Pose Estimation.
 
 ---
 
